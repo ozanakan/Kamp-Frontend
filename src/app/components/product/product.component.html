@@ -1,0 +1,53 @@
+<div class="container">
+<div *ngIf="dataLoaded==false" class="spinner-border text-danger" role="status">
+    <span class="visually-hidden">Loading...</span>
+</div>
+<!--  <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ürün Adı</th>
+            <th>Kategori</th>
+            <th>Fiyat</th>
+            <th>Stok Adedi</th>
+        </tr>
+    </thead>
+    <tr *ngFor="let product of products">
+        <td>{{product.productId}}</td>   
+        <td>{{product.productName}}</td> 
+        <td>{{product.categoryId}}</td>  
+        <td>{{product.unitPrice}}</td>   
+        <td>{{product.unitsInStock}}</td>
+    </tr>
+</table> -->
+<div class="row no-gutters">
+    <div class="col-md-2 mx-left">
+        <app-category></app-category>
+    </div>
+    <div class="col-md-10 container">
+
+        <div class="mb-3">
+          <!--   <label for="filterText" class="form-label">Ürün Ara</label>  -->
+            <input [(ngModel)]="filterText" type="text" class="form-control" id="filterText"
+                placeholder="Arama ifadesi giriniz">
+            <div class="alert alert-primary " style="margin-top: 10px;" *ngIf="filterText"> {{filterText}} aradınız
+            </div>
+        </div>
+        <div  *ngFor="let  product of products | filterPipe:filterText" class="card"
+            style="width: 12rem;margin-left: 10px;margin-bottom: 10px;float: left;">
+            <div class="card-body ">
+                <h5 class="card-title">Id: {{product.productId}} </h5>
+                <p class="card-text">Name: {{product.productName}} </p>
+                <p class="card-text">Stock: {{product.unitsInStock}}</p>
+                <p class="card-text">CategoryId: {{product.categoryId}} </p>
+                <p class="card-text">Price: {{product.unitPrice | currency:'USD'}} </p>
+                <p class="card-text">KDV'li Price: {{product.unitPrice | vatAdded:18 | currency}} </p>
+                <button (click)="addToCart(product)" type="button" style="max-width:8rem;"
+                    class="btn btn-primary ">Sepete
+                    Ekle</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
